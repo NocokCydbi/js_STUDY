@@ -11,12 +11,7 @@ let expenses2 = prompt('Введите обязательную статью р�
 let amount1 = prompt('Во сколько это обойдется?');
 let amount2 = prompt('Во сколько это обойдется?');
 addExpenses2 = addExpenses.split(',');
-let sum=0;
-for(var i=0;i<addExpenses2.length;i++){
-    sum = sum + parseInt(addExpenses2[i]);
-}
-sum = +sum;
-let budgetMonth = money - sum;
+let budgetMonth = money - (amount1 + amount2);
 console.log(budgetMonth);
 mission = Math.ceil(mission / budgetMonth);
 console.log(mission);
