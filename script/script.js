@@ -76,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const popupAnimation = function() {
             requestAnimationFrame(popupAnimation);
             count++;
-            if (count < 38) {
+            if (count < 39) {
                 popupContent.style.left = count + '%';
 
             } else {
