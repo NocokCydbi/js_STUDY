@@ -1,4 +1,5 @@
 'use strict';
+let count = 0;
 window.addEventListener('DOMContentLoaded', () => {
     //Timer
     function countTimer(deadline) {
@@ -74,13 +75,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
         let count = 0;
         const popupAnimation = function() {
-            requestAnimationFrame(popupAnimation);
+            const animation = requestAnimationFrame(popupAnimation);
             count++;
             if (count < 39) {
                 popupContent.style.left = count + '%';
 
-            } else {
-                cancelAnimationFrame(popupAnimation);
+            }
+            
+            else {
+                cancelAnimationFrame(animation);
+                count = 0;
+                return;
 
             }
 
