@@ -45,7 +45,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu');
-    
+
 
         const handlerMenu = () => {
             menu.classList.toggle('active-menu');
@@ -54,12 +54,11 @@ window.addEventListener('DOMContentLoaded', () => {
         btnMenu.addEventListener('click', () => {
             handlerMenu();
         });
-        menu.addEventListener('click', function(event){
-            let target = event.target;
-            if(target.tagName === 'A'){
+        menu.addEventListener('click', event => {
+            const target = event.target;
+            if (target.tagName === 'A') {
                 handlerMenu();
-            }
-            else {
+            } else {
                 return;
             }
         });
@@ -72,15 +71,15 @@ window.addEventListener('DOMContentLoaded', () => {
             popupBtn = document.querySelectorAll('.popup-btn'),
             popupContent = document.querySelector('.popup-content');
 
-        const popupAnimation = function(event) {
-            let animation = requestAnimationFrame(popupAnimation);
+        const popupAnimation = function() {
+            const animation = requestAnimationFrame(popupAnimation);
             count++;
             if (count < 39) {
                 popupContent.style.left = count + '%';
 
-            } else{
+            } else {
                 cancelAnimationFrame(animation);
-              
+
             }
 
 
@@ -101,14 +100,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
         });
 
-        popup.addEventListener('click', (event) =>{
+        popup.addEventListener('click', event => {
             let target = event.target;
-            if(target.classList.contains('popup-close')){
+            if (target.classList.contains('popup-close')) {
                 popup.style.display = 'none';
-            }else{
+            } else {
                 target = target.closest('.popup-content');
                 console.log(target);
-                if(!target){
+                if (!target) {
                     popup.style.display = 'none';
                 }
             }
@@ -123,32 +122,140 @@ window.addEventListener('DOMContentLoaded', () => {
             tab = tabHeader.querySelectorAll('.service-header-tab'),
             tabContent = document.querySelectorAll('.service-tab');
 
-        const toggleTabContent = (index) => {
-            for(let i = 0; i < tabContent.length; i++){
-                if(index === i){
+        const toggleTabContent = index => {
+            for (let i = 0; i < tabContent.length; i++) {
+                if (index === i) {
                     tab[i].classList.add('active');
                     tabContent[i].classList.remove('d-none');
-                }else{
+                } else {
                     tab[i].classList.remove('active');
                     tabContent[i].classList.add('d-none');
                 }
             }
         };
-            tabHeader.addEventListener('click', (event) =>{
-                let target = event.target;
-                    target = target.closest('.service-header-tab');
+        tabHeader.addEventListener('click', event => {
+            let target = event.target;
+            target = target.closest('.service-header-tab');
 
-                if(target){
-                    tab.forEach((item, i) =>{
-                        if( item === target){
-                            toggleTabContent(i);
-                        }
+            if (target) {
+                tab.forEach((item, i) => {
+                    if (item === target) {
+                        toggleTabContent(i);
+                    }
 
-                    });
+                });
 
-                }
+            }
         });
-        
+
     };
     tabs();
+
+    //slider
+
+    const slider = () => {
+        const slide = document.querySelectorAll('.portfolio-item'),
+            slider = document.querySelector('.portfolio-content'),
+            addUl = document.createElement('ul');
+
+
+        addUl.classList.add('portfolio-dots');
+        for (let i = 0; i < 6; i++) {
+            const dot = document.createElement('li');
+            if (i === 0) {
+                dot.classList.add('dot-active');
+            }
+            dot.classList.add('dot');
+            addUl.append(dot);
+        }
+
+        slider.insertAdjacentElement('beforeend', addUl);
+        const dot = document.querySelectorAll('.dot');
+
+
+        let currentSlide = 0,
+            interval;
+
+        const prevSlide = (elem, index, strClass) => {
+            elem[index].classList.remove(strClass);
+
+        };
+
+        const nextSlide = (elem, index, strClass) => {
+            elem[index].classList.add(strClass);
+
+        };
+
+        const autoPlaySlide = () => {
+
+            prevSlide(slide, currentSlide, 'portfolio-item-active');
+            prevSlide(dot, currentSlide, 'dot-active');
+            currentSlide++;
+            if (currentSlide >= slide.length) {
+                currentSlide = 0;
+            }
+            nextSlide(slide, currentSlide, 'portfolio-item-active');
+            nextSlide(dot, currentSlide, 'dot-active');
+        };
+
+        const startSlide = (time = 3000) => {
+            interval = setInterval(autoPlaySlide, time);
+        };
+
+        const stopSlide = () => {
+            clearInterval(interval);
+        };
+        slider.addEventListener('click', event => {
+            event.preventDefault();
+
+            const target = event.target;
+
+            if (!target.matches('#arrow-right, #arrow-left, .dot')) {
+                return;
+            }
+            prevSlide(slide, currentSlide, 'portfolio-item-active');
+            prevSlide(dot, currentSlide, 'dot-active');
+
+
+
+            if (target.matches('#arrow-right')) {
+                currentSlide++;
+            } else if (target.matches('#arrow-left')) {
+                currentSlide--;
+            } else if (target.matches('.dot')) {
+                dot.forEach((elem, index) => {
+                    if (elem === target) {
+                        currentSlide = index;
+                    }
+                });
+            }
+
+            if (currentSlide >= slide.length) {
+                currentSlide = 0;
+            }
+
+            if (currentSlide < 0) {
+                currentSlide = slide.length - 1;
+            }
+            nextSlide(slide, currentSlide, 'portfolio-item-active');
+            nextSlide(dot, currentSlide, 'dot-active');
+
+        });
+        slider.addEventListener('mouseover', event => {
+            if (event.target.matches('.portfolio-btn') ||
+            event.target.matches('.dot')) {
+                stopSlide();
+            }
+        });
+        slider.addEventListener('mouseout', event => {
+            if (event.target.matches('.portfolio-btn') ||
+            event.target.matches('.dot')) {
+                startSlide();
+            }
+        });
+        startSlide(2500);
+
+    };
+
+    slider();
 });
