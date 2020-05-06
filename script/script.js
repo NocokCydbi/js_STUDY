@@ -24,8 +24,6 @@ const getData = (url) => {
 };
 
 const outputPhotos = (data) => {
-    console.log(data);
-
     data.forEach((item) => {
     output.insertAdjacentHTML("beforebegin",
     `<h4>${item.title}</h4>
