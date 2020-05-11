@@ -18,21 +18,25 @@ function countTimer(deadline) {
             minutes
         };
     }
+    const addZero = (num) => {
+        if(num <= 9 && num > 0){
+            num = '0' + num;
+        }
+        if(num === 0 || num < 0){
+            num = '00';
+        }
+        return(num);
+
+    };
 
 
 
     function updateClock() {
-
         const timer = getTimeRemaining();
-        timerHours.textContent = (timer.hours);
-        timerMinutes.textContent = (timer.minutes);
-        timerSeconds.textContent = (timer.seconds);
+        timerHours.textContent = addZero(timer.hours);
+        timerMinutes.textContent = addZero(timer.minutes);
+        timerSeconds.textContent = addZero(timer.seconds);
 
-        if (timer.timeRemaining === 0 || timer.timeRemaining < 0) {
-            timerHours.textContent = '00';
-            timerMinutes.textContent = '00';
-            timerSeconds.textContent = '00';
-        }
         setTimeout(updateClock, 1000);
 
 

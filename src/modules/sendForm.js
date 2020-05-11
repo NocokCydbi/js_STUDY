@@ -63,6 +63,7 @@ const sendForm = () => {
 
         item.addEventListener('submit', event => {
             event.preventDefault();
+
             const target = event.target;
             clearInput(target);
             item.appendChild(statusMessage);
@@ -85,6 +86,11 @@ const sendForm = () => {
         const request = new XMLHttpRequest();
 
         request.addEventListener('readystatechange', () => {
+            const deleteStatus = (status) => {
+                setTimeout(() => {
+                    status.textContent = '';
+                }, 5000);
+            };
 
             if (request.readyState !== 4) {
                 return;
@@ -92,8 +98,10 @@ const sendForm = () => {
             if (request.status === 200) {
                 statusMessage.textContent = successMessage;
                 outputData();
+                deleteStatus(statusMessage);
             } else {
                 errorData(request.status);
+                deleteStatus(statusMessage);
             }
         });
 
