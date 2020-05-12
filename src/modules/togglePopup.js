@@ -4,14 +4,15 @@ const togglePopup = () => {
         popupBtn = document.querySelectorAll('.popup-btn'),
         popupContent = document.querySelector('.popup-content');
 
-    let count = 0;
+    let count = -20;
 
 
     const popupAnimation = function() {
         const animation = requestAnimationFrame(popupAnimation);
+
         count++;
-        if (count < 39) {
-            popupContent.style.left = count + '%';
+        if (count < 11) {
+            popupContent.style.top = count + '%';
 
         } else {
             cancelAnimationFrame(animation);
@@ -32,19 +33,18 @@ const togglePopup = () => {
             }
 
         });
-        console.log(popup);
     });
     popup.addEventListener('click', event => {
         let target = event.target;
         if (target.classList.contains('popup-close')) {
             popup.style.display = 'none';
-            count = 0;
+            count = -20;
 
         } else {
             target = target.closest('.popup-content');
             if (!target) {
                 popup.style.display = 'none';
-                count = 0;
+                count =  -20;
             }
         }
     });

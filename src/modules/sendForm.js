@@ -17,7 +17,7 @@ const sendForm = () => {
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem; color: white';
 
-    const clearInput = target => {
+    const clearInput = (target) => {
         const input = target.querySelectorAll('input');
         input.forEach(item => {
             item.value = '';
@@ -49,7 +49,7 @@ const sendForm = () => {
 
             inputs.forEach(item => {
                 item.addEventListener('input', () => {
-                    const reg = /[^а-яА-ЯЁ]/g;
+                    const reg = /[^а-яА-ЯЁ.,?!\-()"':;\s]/g;
                     item.value = item.value.replace(reg, '');
                 });
             });
@@ -65,7 +65,6 @@ const sendForm = () => {
             event.preventDefault();
 
             const target = event.target;
-            clearInput(target);
             item.appendChild(statusMessage);
             statusMessage.textContent = loadMessage;
             const formData = new FormData(item);
@@ -79,6 +78,8 @@ const sendForm = () => {
                 console.error(error);
                 statusMessage.textContent = errorMessage;
             });
+            clearInput(target);
+
 
         });
     });

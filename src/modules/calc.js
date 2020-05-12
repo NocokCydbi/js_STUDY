@@ -28,9 +28,10 @@ const calc = (price = 100) => {
         }
         totalValue.textContent = total;
     };
-
-    calcBlock.addEventListener('change', event => {
+    calcBlock.addEventListener('input', event => {
         const target = event.target;
+        target.value =    target.value.replace(/[^\d]/g, '');
+
         if (target === calcType || target === calcSquare ||
         target === calcDay || target === calcCount) {
             countSum();

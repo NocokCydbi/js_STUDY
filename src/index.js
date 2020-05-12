@@ -1,7 +1,7 @@
 'use strict';
+import '@babel/polyfill';
 import 'fetch-polyfill';
 import 'formdata-polyfill';
-import '@babel/polyfill';
 import 'nodelist-foreach-polyfill';
 import elementClosest from 'element-closest';
 elementClosest(window);
