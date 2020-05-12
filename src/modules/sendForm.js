@@ -63,12 +63,16 @@ const sendForm = () => {
 
         item.addEventListener('submit', event => {
             event.preventDefault();
-
+            if(document.querySelector('.mess').value === ''){
+                event.preventDefault();
+                console.error('Заполните поле "Ваше сообщение"');
+            }else{
             const target = event.target;
             item.appendChild(statusMessage);
             statusMessage.textContent = loadMessage;
             const formData = new FormData(item);
             const body = {};
+
             formData.forEach((val, key) => {
                 body[key] = val;
             });
@@ -79,6 +83,7 @@ const sendForm = () => {
                 statusMessage.textContent = errorMessage;
             });
             clearInput(target);
+        }
 
 
         });
